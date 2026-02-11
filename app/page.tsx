@@ -1,10 +1,5 @@
 export default async function Page() {
-  const base =
-    process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000";
-
-  const { year, total } = await fetch(`${base}/api/total-pages`, {
+  const { year, total } = await fetch("/api/total-pages", {
     cache: "no-store",
   }).then((r) => r.json());
 
