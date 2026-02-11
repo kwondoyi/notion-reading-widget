@@ -1,7 +1,19 @@
-export default async function Page() {
-  const { year, total } = await fetch("/api/total-pages", {
-    cache: "no-store",
-  }).then((r) => r.json());
+"use client";
+
+import { useEffect, useState } from "react";
+
+export default function Page() {
+  const [data, setData] = useState<{ year: number; total: number } | null>(null);
+
+  useEffect(() => {
+    fetch("/api/total-pages")
+      .then((r) => r.json())
+      .then((json) => setData(json))
+      .catch(() => setData({ year: new Date().getFullYear(), total: 0 }));
+  }, []);
+
+  const year = data?.year ?? new Date().getFullYear();
+  const total = data?.total ?? 0;
 
   return (
     <main
